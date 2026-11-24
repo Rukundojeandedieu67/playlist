@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111827">
+    <title>Mixtape — playlists made to share</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="Mixtape home"><span class="brand-mark">♫</span> mixtape</a>
+      <nav aria-label="Main navigation">
+        <a href="#home">Discover</a>
+        <a href="#analytics">Most followed</a>
+      </nav>
+      <div class="account">
+        <span id="account-label" class="muted">Checking session…</span>
+        <button id="signout-button" class="button button-quiet" hidden>Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="auth-panel" class="auth-panel" hidden>
+        <div class="auth-copy">
+          <p class="eyebrow">Good music travels</p>
+          <h1>Your next favorite<br>playlist is here.</h1>
+          <p>Sign in to make a mix, follow a playlist, and share what you love.</p>
+        </div>
+        <form id="auth-form" class="panel auth-form">
+          <h2 id="auth-heading">Welcome back</h2>
+          <label>Email <input id="auth-email" type="email" autocomplete="email" required></label>
+          <label>Password <input id="auth-password" type="password" minlength="6" autocomplete="current-password" required></label>
+          <button id="auth-submit" class="button button-primary" type="submit">Sign in</button>
+          <button id="auth-mode" class="text-button" type="button">New here? Create an account</button>
+          <p id="auth-message" class="notice" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="app-panel" hidden>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">A little soundtrack for everything</p>
+            <h1>Find your next<br><span>repeat-worthy</span> mix.</h1>
+            <p class="hero-copy">Made by people, for people. Discover a mood and pass it on.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="vinyl"><span></span></div>
+            <div class="art-note">SIDE A<br><strong>YOUR<br>MOOD</strong></div>
+          </div>
+        </section>
+
+        <section id="home-view" class="content-view">
+          <div class="section-heading">
+            <div><p class="eyebrow">The collection</p><h2>Playlists</h2></div>
+            <button id="show-create" class="button button-primary">＋ Make a playlist</button>
+          </div>
+          <form id="create-form" class="panel create-form" hidden>
+            <h3>Start a new mix</h3>
+            <label>Playlist name <input id="playlist-name" maxlength="150" required placeholder="Sunday morning, no skips"></label>
+            <label class="check-label"><input id="playlist-public" type="checkbox" checked> Make it public</label>
+            <div class="form-actions"><button class="button button-primary" type="submit">Create playlist</button><button id="cancel-create" class="button button-quiet" type="button">Cancel</button></div>
+          </form>
+          <p id="home-message" class="notice" role="status" aria-live="polite"></p>
+          <div id="playlist-grid" class="playlist-grid" aria-live="polite"></div>
+          <div id="pagination" class="pagination"></div>
+        </section>
+
+        <section id="detail-view" class="content-view" hidden>
+          <a class="back-link" href="#home">← All playlists</a>
+          <div id="detail-content"></div>
+        </section>
+
+        <section id="analytics-view" class="content-view" hidden>
+          <div class="section-heading"><div><p class="eyebrow">Community favorites</p><h2>Most followed</h2></div></div>
+          <p id="analytics-message" class="notice" role="status" aria-live="polite"></p>
+          <div id="analytics-grid" class="playlist-grid"></div>
+        </section>
+      </section>
+    </main>
+    <footer><span>mixtape</span><span>Share the songs that stay with you.</span></footer>
+    <script src="/config.js"></script>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

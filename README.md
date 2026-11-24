@@ -13,7 +13,7 @@ A playlist-sharing app with a Django REST API, Supabase Auth/Postgres, and a sta
 
 ## Run locally
 
-Requirements: Python 3.11+, Node.js 20+, and a Supabase project (or a local SQLite database for API-only tests).
+Requirements: Python 3.11+, Node.js 20+, PostgreSQL 17+, and a Supabase project. SQLite can be used temporarily for API-only tests.
 
 1. Create a Supabase project and enable Email sign-up in **Authentication → Providers**. Copy its Project URL, anon/public key, and JWT secret from **Project Settings → API**.
 2. In PowerShell, from the project root:
@@ -25,18 +25,18 @@ Requirements: Python 3.11+, Node.js 20+, and a Supabase project (or a local SQLi
    Copy-Item .env.example .env
    ```
 
-3. Set the values in `.env`, or set equivalent PowerShell environment variables for the current terminal:
+3. In pgAdmin, connect to your local PostgreSQL server, right-click **Databases → Create → Database**, create a database named `mixtape`, and use the login role for your local server as its owner. Set that role's password in your local `.env` `DATABASE_URL` (URL-encode any special characters in the password); do not paste it into chat or commit `.env`. Then set `SUPABASE_URL` and, for legacy HS256 tokens, `SUPABASE_JWT_SECRET` in `.env`:
 
    ```powershell
    $env:DJANGO_SECRET_KEY = "use-a-long-random-value"
    $env:DJANGO_DEBUG = "true"
    $env:SUPABASE_URL = "https://YOUR_PROJECT.supabase.co"
    $env:SUPABASE_JWT_SECRET = "YOUR_PROJECT_JWT_SECRET"
-   $env:DATABASE_URL = "sqlite:///db.sqlite3"
+   $env:DATABASE_URL = "postgresql://postgres:YOUR_LOCAL_PASSWORD@127.0.0.1:5432/mixtape"
    $env:FRONTEND_ORIGINS = "http://localhost:8001,http://127.0.0.1:8001"
    ```
 
-   `SUPABASE_JWKS_URL` and `SUPABASE_JWT_ISSUER` default from `SUPABASE_URL`. New Supabase projects that issue asymmetric JWTs use the JWKS endpoint; the JWT secret is needed only for legacy HS256 tokens. Do not expose the JWT secret or database URL in frontend code.
+   `SUPABASE_JWKS_URL` and `SUPABASE_JWT_ISSUER` default from `SUPABASE_URL`. New Supabase projects that issue asymmetric JWTs use the JWKS endpoint; the JWT secret is needed only for legacy HS256 tokens. Do not expose the JWT secret or database URL in frontend code. To temporarily run API-only tests on SQLite, set `DATABASE_URL=sqlite:///db.sqlite3`.
 4. Run Django migrations, optionally load the ten sample database rows, and start the API:
 
    ```powershell

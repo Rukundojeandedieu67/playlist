@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: mixtape-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python manage.py migrate && gunicorn config.wsgi:application
+    healthCheckPath: /api/health/
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        value: mixtape-api.onrender.com
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_JWT_AUDIENCE
+        value: authenticated
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: FRONTEND_ORIGINS
+        sync: false
